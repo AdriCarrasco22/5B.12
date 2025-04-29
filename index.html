@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title</title>
+</head>
+
+<body>
+    <h1 id="saludo"></h1>
+    <script>
+        const ahora = new Date();
+        const horas = ahora.getHours();
+        const minutos = ahora.getMinutes().toString().padStart(2, '0');
+        const saludo = horas < 12 ? "Buenos días" : "Hola";
+        document.getElementById("saludo").innerText = `${saludo}. Son las ${horas}:${minutos}`;
+    </script>
+
+    <h2>Conversión de Euros a Pesetas</h2>
+    <table border="1">
+        <tr>
+            <th>Euros</th>
+            <th>Pesetas</th>
+        </tr>
+    </table>
+    <script>
+        const tabla = document.querySelector("table");
+        for (let euros = 1; euros <= 10; euros++) {
+            let pesetas = (euros * 166.386).toFixed(2);
+            let fila = `<tr><td>${euros}</td><td>${pesetas}</td></tr>`;
+            tabla.innerHTML += fila;
+        }
+    </script>
+    <br>
+
+    <input type="password" id="clave" placeholder="Contraseña">
+    <button onclick="verClave()">Mostrar/Ocultar</button>
+
+    <script>
+        function verClave() {
+            const campo = document.getElementById("clave");
+            campo.type = campo.type === "password" ? "text" : "password";
+        }
+    </script>
+
+    <form onsubmit="return validarFecha()">
+        <label>Fecha de reserva:</label>
+        <input type="date" id="fechaReserva">
+        <button type="submit">Enviar</button>
+    </form>
+    <p id="mensaje" style="color:red;"></p>
+
+    <script>
+        function validarFecha() {
+            const fechaInput = document.getElementById("fechaReserva").value;
+            const fechaHoy = new Date().toISOString().slice(0, 10);
+            if (fechaInput < fechaHoy) {
+                document.getElementById("mensaje").innerText = "La fecha no puede ser anterior a hoy.";
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <br><br>
+
+    <form onsubmit="return validarFormulario()">
+        <label>Usuario:</label><br>
+        <input type="text" id="usuario"><br>
+        <label>Contraseña:</label><br>
+        <input type="password" id="clave1"><br>
+        <label>Repetir contraseña:</label><br>
+        <input type="password" id="clave2"><br><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <p id="error" style="color:red;"></p>
+
+    <script>
+        function validarFormulario() {
+            const usuario = document.getElementById("usuario").value;
+            const clave1 = document.getElementById("clave1").value;
+            const clave2 = document.getElementById("clave2").value;
+            const error = document.getElementById("error");
+
+            if (usuario.length < 5) {
+                error.innerText = "El usuario debe tener al menos 5 caracteres.";
+                return false;
+            }
+
+            if (clave1 !== clave2) {
+                error.innerText = "Las contraseñas no coinciden.";
+                return false;
+            }
+
+            error.innerText = "";
+            return true;
+        }
+    </script>
+</body>
+
+</html>
